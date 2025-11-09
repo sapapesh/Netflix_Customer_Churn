@@ -7,10 +7,10 @@
 # TODO: Update site_author
 
 site_name: Professional Analytics Project
-site_url: https://denisecase.github.io/pro-analytics-02-starter/
-repo_url: https://github.com/denisecase/pro-analytics-02-starter
-site_description: Professional Python project demonstrating industry best practices
-site_author: Denise Case
+site_url: https://sapapesh.github.io/Netflix_Customer_Churn/
+repo_url: https://github.com/sapapesh/Netflix_Customer_Churn
+site_description: Analysis of Netflix Churn Data
+site_author: Sarah Howard
 docs_dir: docs
 site_dir: site
 
