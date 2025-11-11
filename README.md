@@ -1,15 +1,4 @@
-# Pro Analytics 02 Python Starter Repository
-
-> Use this repo to start a professional Python project.
-
-- Additional information: <https://github.com/denisecase/pro-analytics-02>
-- Project organization: [STRUCTURE](./STRUCTURE.md)
-- Build professional skills:
-  - **Environment Management**: Every project in isolation
-  - **Code Quality**: Automated checks for fewer bugs
-  - **Documentation**: Use modern project documentation tools
-  - **Testing**: Prove your code works
-  - **Version Control**: Collaborate professionally
+# Analysis of Netflix Customer Churn
 
 ---
 
