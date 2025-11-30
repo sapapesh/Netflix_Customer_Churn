@@ -128,4 +128,43 @@ df["Genre Preference (Numeric)"] = df["Genre Preference"].map(genre_mapping)
 df["Device Used Most Often (Numeric)"] = df["Device Used Most Often"].map(device_mapping)
 ```
 
+## Section 2 -Exploratory Data Analysis
+### Section 2.1 Generating histograms
+```
+# Generate histograms for all numeric columns
+numeric_cols = df.select_dtypes(include="number").columns
 
+# Set up the figure size based on number of columns
+n_cols = len(numeric_cols)
+fig, axes = plt.subplots(nrows=(n_cols + 1) // 2, ncols=2, figsize=(12, 4 * ((n_cols + 1) // 2)))
+axes = axes.flatten()  # Flatten in case of single row
+
+for i, col in enumerate(numeric_cols):
+    df[col].hist(
+        bins=20,                  # More bins for detail
+        ax=axes[i],
+        color="skyblue",
+        edgecolor="black",
+        alpha=0.7
+    )
+    axes[i].set_title(f"{col} distribution", fontsize=12)
+    axes[i].set_xlabel(col)
+    axes[i].set_ylabel("Frequency")
+
+# Hide any empty subplots
+for j in range(i + 1, len(axes)):
+    axes[j].axis("off")
+
+plt.tight_layout()
+plt.show()
+```
+![alt text](notebooks/histograms/hist_Customer Satisfaction Score (1-10).png)
+![alt text](notebooks/histograms/hist_Subscription_Plan.png)
+![alt text](notebooks/histograms/hist_Payment_History__On-Time_Delayed_.png)
+![alt text](notebooks/histograms/hist_Support_Queries_Logged.png)
+![alt text](notebooks/histograms/hist_Age.png)
+![alt text](notebooks/histograms/hist_Monthly_Income____.png)
+![alt text](notebooks/histograms/hist_Support_Queries_Logged.png)
+![alt text](notebooks/histograms/hist_Health_Score.png)
+![alt text](notebooks/histograms/hist_Genre_Preference.png)
+![alt text](notebooks/histograms/hist_Device_Used_Most_Often.png)
