@@ -412,9 +412,74 @@ x9 = df[["Promotional Offers Used"]]
 y9 = df["Churn Status (Numeric)"]
 ```
 
+## Section 4 - Train a Model (Linear Regression)
+
+### 4.1 - Split the data into training and test sets using train_test_split
+```
+# Splitting the data into training and test sets
+x1_train, x1_test, y1_train, y1_test = train_test_split(x1, y1, test_size=0.2, random_state=42)
+x2_train, x2_test, y2_train, y2_test = train_test_split(x2, y2, test_size=0.2, random_state=42)
+x3_train, x3_test, y3_train, y3_test = train_test_split(x3, y3, test_size=0.2, random_state=42)
+x4_train, x4_test, y4_train, y4_test = train_test_split(x4, y4, test_size=0.2, random_state=42)
+x5_train, x5_test, y5_train, y5_test = train_test_split(x5, y5, test_size=0.2, random_state=42)
+x6_train, x6_test, y6_train, y6_test = train_test_split(x6, y6, test_size=0.2, random_state=42)
+x7_train, x7_test, y7_train, y7_test = train_test_split(x7, y7, test_size=0.2, random_state=42)
+x8_train, x8_test, y8_train, y8_test = train_test_split(x8, y8, test_size=0.2, random_state=42)
+x9_train, x9_test, y9_train, y9_test = train_test_split(x9, y9, test_size=0.2, random_state=42)
+```
+
+### 4.2 - Train model using Scikit-Learn model.fit() method for Linear Regression
+```
+# Training the model
+model1 = LinearRegression()
+model2 = LinearRegression()
+model3 = LinearRegression()
+model4 = LinearRegression()
+model5 = LinearRegression()
+model6 = LinearRegression()
+model7 = LinearRegression()
+model8 = LinearRegression()
+model9 = LinearRegression()
+
+model1.fit(x1_train, y1_train)
+model2.fit(x2_train, y2_train)
+model3.fit(x3_train, y3_train)
+model4.fit(x4_train, y4_train)
+model5.fit(x5_train, y5_train)
+model6.fit(x6_train, y6_train)
+model7.fit(x7_train, y7_train)
+model8.fit(x8_train, y8_train)
+model9.fit(x9_train, y9_train)
+```
+
+### Section 4.3 - Evaluate Performance
+
+```
+def evaluate_model(name, model, x_test, y_test):
+    """Evaluate a trained model on test data and return metrics."""
+    y_pred = model.predict(x_test)
+    r2 = r2_score(y_test, y_pred)
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+
+    print(f"Model: {name}")
+    print(f"  R² Score: {r2:.3f}")
+    print(f"  MAE     : {mae:.3f}")
+    print(f"  RMSE    : {rmse:.3f}")
+    print("-" * 30)
+
+evaluate_model("Model 1", model1, x1_test, y1_test)
+evaluate_model("Model 2", model2, x2_test, y2_test)
+evaluate_model("Model 3", model3, x3_test, y3_test)
+evaluate_model("Model 4", model4, x4_test, y4_test)
+evaluate_model("Model 5", model5, x5_test, y5_test)
+evaluate_model("Model 6", model6, x6_test, y6_test)
+evaluate_model("Model 7", model7, x7_test, y7_test)
+evaluate_model("Model 8", model8, x8_test, y8_test)
+evaluate_model("Model 9", model9, x9_test, y9_test)
+```
+![alt text](LinearRegression.jpg)
+
+The results of the linear regression are included in the table above. Upon reviewing these results, no specific use case is performing any better than the other use cases. The R-Squared Scores are all close to 0 indicating that the model does not match the data very well.  The MAE and RMSE all have similar scores and indicated that none of the cases predict customer churn better than the others.
 
 
-
-
-
-## Section 4 -
