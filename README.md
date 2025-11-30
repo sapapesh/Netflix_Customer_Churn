@@ -169,6 +169,8 @@ plt.show()
 ![alt text](notebooks/histograms/hist_Genre_Preference.png)
 ![alt text](notebooks/histograms/hist_Device_Used_Most_Often.png)
 
+
+
 ### 2.2 Generating the heatmap
 ```
 # Folder to save images
@@ -199,6 +201,8 @@ plt.close()
 print(f"Heatmap saved to {heatmap_path}")
 ```
 ![alt text](notebooks/heatmaps/correlation_heatmap.png)
+
+A review of the correlation heatmap shows almost no correlation between the attributes.  Therefore, there does not appear to be a singular attribute that will contribute to the customer churn rate.
 
 ### Generating scatterplots
 ```
@@ -256,4 +260,78 @@ else:
 ![alt text](notebooks/scatterplots/scatter_Genre_Preference__Numeric__vs_Churn_Status__Numeric_.png)
 ![alt text](notebooks/scatterplots/scatter_Device_Used_Most_Often__Numeric__vs_Churn_Status__Numeric_.png)
 
+Scatterplots has been completed to compare each attribute to churn status. However, the scatterplots did not present any clear patterns and appeared to be fairly balanced.
+
 ### 2.4 - Generating violin plots
+``
+# Adding violin plots
+# === SETUP ===
+violin_folder = Path("violinplots")
+violin_folder.mkdir(parents=True, exist_ok=True)
+
+# === VIOLIN PLOTS ===
+# Use the same churn column and numeric columns already detected
+if len(numeric_cols) == 0:
+    print("⚠️ No numeric feature columns found — skipping violin plots.")
+else:
+    for col in numeric_cols:
+        safe_col = sanitize_filename(col)
+        filename = violin_folder / f"violin_{sanitize_filename(churn_col)}_vs_{safe_col}.png"
+
+        plt.figure(figsize=(6, 4))
+        sns.violinplot(
+            data=df,
+            x=churn_col,
+            y=col,
+            cut=0,         # keeps violins within actual data range
+            inner="quartile",  # adds lines for Q1, median, Q3
+        )
+        plt.title(f"{col} by {churn_col}")
+        plt.xlabel(churn_col)
+        plt.ylabel(col)
+        plt.tight_layout()
+        plt.savefig(filename, dpi=300)
+        plt.close()
+
+    print(f"🎻 Violin plots saved to: {violin_folder.resolve()}")
+```
+![alt text](notebooks/violinplots/violin_Churn_Status__Numeric__vs_Customer_Satisfaction_Score__1-10_.png)
+![alt text](notebooks/violinplots/violin_Churn_Status__Numeric__vs_Subscription_Plan__Numeric_.png)
+![alt text](notebooks/violinplots/violin_Churn_Status__Numeric__vs_Payment_History__Numeric_.png)
+![alt text](notebooks/violinplots/violin_Churn_Status__Numeric__vs_Support_Queries_Logged.png)
+![alt text](notebooks/violinplots/violin_Churn_Status__Numeric__vs_Age.png)
+![alt text](notebooks/violinplots/violin_Churn_Status__Numeric__vs_Monthly_Income____.png)
+![alt text](notebooks/violinplots/violin_Health_Score_vs_Churn_Status__Numeric_.png)
+![alt text](notebooks/violinplots/violin_Device_Used_Most_Often__Numeric__vs_Churn_Status__Numeric_.png)
+![alt text](notebooks/violinplots/violin_Churn_Status__Numeric__vs_Promotional_Offers_Used.png)
+
+Of all the violin plots, Promotional Offers by Churn Status is the only result that appears to show a relationship between promotional offers used and whether a customer churn. It appears that the more promotional offers that a customer receives, the more likely that they are to churn.
+
+### Section 2.5 Combining demographics variables of age and income
+```
+# Combining age and income to compare to churn
+
+df["age_group"] = pd.cut(df["Age"], bins=[18, 30, 45, 60, 90],
+                         labels=["18–30", "30–45", "45–60", "60+"])
+
+df["income_group"] = pd.qcut(df["Monthly Income ($)"], q=4,
+                             labels=["Low", "Mid-Low", "Mid-High", "High"])
+
+
+crosstab = pd.crosstab(
+    [df["age_group"], df["income_group"]],
+    df["Churn Status (Numeric)"]
+)
+
+crosstab_norm = crosstab.div(crosstab.sum(axis=1), axis=0)
+
+sns.heatmap(crosstab_norm, annot=True, cmap="Blues")
+plt.title("Churn Rate by Age Group × Income Group")
+plt.savefig("heatmaps/churn_age_income_heatmap.png",
+            dpi=300, bbox_inches="tight")
+plt.show()
+```
+The below heatmap generated to compare demographics to churn:
+![alt text](notebooks/heatmaps/churn_age_income_heatmap.png)
+
+
