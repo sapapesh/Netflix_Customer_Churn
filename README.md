@@ -10,6 +10,9 @@ The analysis uses the dataset found on Kaggle: Netflix Customer Churn and Engage
 
 The data has been saved at the following location: https://github.com/sapapesh/Netflix_Customer_Churn/blob/main/data/netflix_large_user_data.csv
 
+## Report
+The Predicting Churn for Netflix report can be found at Overleaf: https://www.overleaf.com/read/jngmgycgmqtc#2775b5
+
 
 
 ---
