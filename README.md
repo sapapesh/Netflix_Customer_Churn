@@ -255,3 +255,5 @@ else:
 ![alt text](notebooks/scatterplots/scatter_Health_Score_vs_Churn_Status__Numeric_.png)
 ![alt text](notebooks/scatterplots/scatter_Genre_Preference__Numeric__vs_Churn_Status__Numeric_.png)
 ![alt text](notebooks/scatterplots/scatter_Device_Used_Most_Often__Numeric__vs_Churn_Status__Numeric_.png)
+
+### 2.4 - Generating violin plots
