@@ -168,3 +168,90 @@ plt.show()
 ![alt text](notebooks/histograms/hist_Health_Score.png)
 ![alt text](notebooks/histograms/hist_Genre_Preference.png)
 ![alt text](notebooks/histograms/hist_Device_Used_Most_Often.png)
+
+### 2.2 Generating the heatmap
+```
+# Folder to save images
+output_folder = Path("heatmaps")
+output_folder.mkdir(parents=True, exist_ok=True)
+
+# Compute correlation matrix
+corr = df.corr(numeric_only=True)
+
+# Plot heatmap
+plt.figure(figsize=(10, 8))
+sns.heatmap(
+    corr,
+    annot=True,          # show correlation values in cells
+    fmt=".2f",           # number format
+    cmap="coolwarm",     # color scheme
+    square=True,
+    cbar=True
+)
+plt.title("Feature Correlation Heatmap", fontsize=14)
+plt.tight_layout()
+
+# Save
+heatmap_path = output_folder / "correlation_heatmap.png"
+plt.savefig(heatmap_path, dpi=300)
+plt.close()
+
+print(f"Heatmap saved to {heatmap_path}")
+```
+![alt text](notebooks/heatmaps/correlation_heatmap.png)
+
+### Generating scatterplots
+```
+# Adding scatterplots
+# === SETUP ===
+scatter_folder = Path("scatterplots")
+scatter_folder.mkdir(parents=True, exist_ok=True)
+
+
+def sanitize_filename(name):
+    """Replace invalid filename characters with underscores."""
+    return re.sub(r"[^A-Za-z0-9_-]", "_", name)
+
+
+# === DETECT CHURN COLUMN ===
+# Priority: 'churn_status' → 'churn' → last column
+if "churn_status" in df.columns:
+    churn_col = "churn_status"
+elif "churn" in df.columns:
+    churn_col = "churn"
+else:
+    churn_col = df.columns[-1]  # fallback to last column
+
+print(f"🎯 Using '{churn_col}' as the churn column (x-axis).")
+
+# === SCATTERPLOTS ===
+# Select numeric columns except churn column
+numeric_cols = df.select_dtypes(include=["number"]).columns.drop(churn_col, errors="ignore")
+
+if len(numeric_cols) == 0:
+    print("⚠️ No numeric feature columns found — skipping scatterplots.")
+else:
+    for col in numeric_cols:
+        safe_col = sanitize_filename(col)
+        filename = scatter_folder / f"scatter_{sanitize_filename(churn_col)}_vs_{safe_col}.png"
+
+        plt.figure(figsize=(6, 4))
+        sns.scatterplot(x=df[churn_col], y=df[col], alpha=0.6)
+        plt.title(f"{col} by {churn_col}")
+        plt.xlabel(churn_col)
+        plt.ylabel(col)
+        plt.tight_layout()
+        plt.savefig(filename, dpi=300)
+        plt.close()
+
+    print(f"✅ Scatterplots saved to: {scatter_folder.resolve()}")
+```
+![alt text](notebooks/scatterplots/scatter_Customer_Satisfaction_Score__1-10__vs_Churn_Status__Numeric_.png)
+![alt text](notebooks/scatterplots/scatter_Subscription_Plan__Numeric__vs_Churn_Status__Numeric_.png)
+![alt text](notebooks/scatterplots/scatter_Payment_History__Numeric__vs_Churn_Status__Numeric_.png)
+![alt text](notebooks/scatterplots/scatter_Support_Queries_Logged_vs_Churn_Status__Numeric_.png)
+![alt text](notebooks/scatterplots/scatter_Age_vs_Churn_Status__Numeric_.png)
+![alt text](notebooks/scatterplots/scatter_Monthly_Income_____vs_Churn_Status__Numeric_.png)
+![alt text](notebooks/scatterplots/scatter_Health_Score_vs_Churn_Status__Numeric_.png)
+![alt text](notebooks/scatterplots/scatter_Genre_Preference__Numeric__vs_Churn_Status__Numeric_.png)
+![alt text](notebooks/scatterplots/scatter_Device_Used_Most_Often__Numeric__vs_Churn_Status__Numeric_.png)
