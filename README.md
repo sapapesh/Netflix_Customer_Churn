@@ -53,4 +53,79 @@ source .venv/bin/activate
 
 ---
 
-## 
+## Imports
+
+```
+from pathlib import Path
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, PolynomialFeatures, LabelEncoder
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, silhouette_score
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.cluster import KMeans
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+import re
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+```
+
+## Section 1. Import and Inspect Data
+### Section 1.1 - Load the Netflix Customer Data, display the info, and display the first 10 rows of data
+```
+# Load the Netflix Customer Churn data from the data folder
+df = pd.read_csv(r"C:\Repos\Netflix_Customer_Churn\data\netflix_large_user_data.csv", delimiter=",")
+
+# Display info
+df.info()
+
+# Display the first 10 rows
+df.head(10)
+```
+
+### Section 1.2 - Check for missing and/or duplicate values
+```
+# Check for missing statistics
+df.isnull().values.any()
+df.isnull().sum()/df.shape[0]
+
+# Check for duplicates
+df.drop_duplicates(inplace = True)
+```
+
+### Section 1.3 - Display summary statistics
+```
+# Display summary statistics
+print(df.describe())
+```
+
+### Section 1.4 - Check for unique values for Payment History, Subscription Plan, and Churn Status
+```
+# Check for unique values for Payment History, Subscription Plan, and Churn Status
+print("Unique Payment History values:", df["Payment History (On-Time/Delayed)"].unique())
+print("Unique Subscription Plan values:", df["Subscription Plan"].unique())
+print("Unique Churn Status values:", df["Churn Status (Yes/No)"].unique())
+```
+
+### Section 1.5 - Converting data from categorical to numeric
+```
+# Convert categorical to numeric using mapping
+payment_mapping = {"On-Time": 1, "Delayed": 0}
+subscription_mapping = {"Basic": 0, "Standard": 1, "Premium": 2}
+churn_mapping = {"Yes": 1, "No": 0}
+genre_mapping = {"Action": 0, "Comedy": 1, "Documentary": 2, "Drama": 3, "Romance": 4, "Sci-Fi": 5, "Thriller": 6}
+device_mapping = {"Desktop": 0, "Laptop": 1, "Mobile": 2, "Smart TV": 3, "Tablet": 4}
+
+# Apply mappings
+df["Payment History (Numeric)"] = df["Payment History (On-Time/Delayed)"].map(payment_mapping)
+df["Subscription Plan (Numeric)"] = df["Subscription Plan"].map(subscription_mapping)
+df["Churn Status (Numeric)"] = df["Churn Status (Yes/No)"].map(churn_mapping)
+df["Genre Preference (Numeric)"] = df["Genre Preference"].map(genre_mapping)
+df["Device Used Most Often (Numeric)"] = df["Device Used Most Often"].map(device_mapping)
+```
+
+
