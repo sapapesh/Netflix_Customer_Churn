@@ -263,7 +263,7 @@ else:
 Scatterplots has been completed to compare each attribute to churn status. However, the scatterplots did not present any clear patterns and appeared to be fairly balanced.
 
 ### 2.4 - Generating violin plots
-``
+```
 # Adding violin plots
 # === SETUP ===
 violin_folder = Path("violinplots")
@@ -334,4 +334,87 @@ plt.show()
 The below heatmap generated to compare demographics to churn:
 ![alt text](notebooks/heatmaps/churn_age_income_heatmap.png)
 
+## Section 3 - Feature Selection and Justifications
 
+### 3.1 Choose features and targets
+**Case 1 - Customer Satisfaction Score**
+Input features: Customer Satisfaction Score (1-10)
+Target: Churn Status (Yes/No)
+
+**Case 2 - Subscription Plan**
+Input features: Subscription Plan
+Target: Churn Status (Yes/No)
+
+**Case 3 - Subscription Plan and Payment History**
+Input features: Subscription Plan and Payment History (On-Time/Delayed)
+Target: Churn Status (Yes/No)
+
+**Case 4 - Support Queries Logged**
+Input features: Support Queries Logged
+Target: Churn Status (Yes/No)
+
+**Case 5 - Demographics**
+Input features: Age and Monthly Income ($)
+Target: Churn Status (Yes/No)
+
+**Case 6 - Health Score**
+Input features: Health Score
+Target: Churn Status (Yes/No)
+
+**Case 7 - Genre Preference**
+Input features: Genre Preference (Numeric)
+Target: Churn Status (Yes/No)
+
+**Case 8 - Device Used Most Often**
+Input features: Device Used Most Often (Numeric)
+Target: Churn Status (Yes/No)
+
+**Case 9 - Promotional Offers**
+Input features: Promotional Offers Used
+Target: Churn Status (Yes/No)
+
+### 3.2 - Define x and y
+```
+# Case 1. Customer Satisfaction Score
+x1 = df[["Customer Satisfaction Score (1-10)"]]
+y1 = df["Churn Status (Numeric)"]
+
+# Case 2. Subscription Plan
+x2 = df[["Subscription Plan (Numeric)"]]
+y2 = df["Churn Status (Numeric)"]
+
+# Case 3. Subscription Plan and Payment History
+x3 = df[["Subscription Plan (Numeric)", "Payment History (Numeric)"]]
+y3 = df["Churn Status (Numeric)"]
+
+# Case 4. Support Queries Logged
+x4 = df[["Support Queries Logged"]]
+y4 = df["Churn Status (Numeric)"]
+
+# Case 5. Demographics
+x5 = df[["Age", "Monthly Income ($)"]]
+y5 = df["Churn Status (Numeric)"]
+
+# Case 6. Health Score
+x6 = df[["Health_Score"]]
+y6 = df["Churn Status (Numeric)"]
+
+# Case 7. Genre Preference
+x7 = df[["Genre Preference (Numeric)"]]
+y7 = df["Churn Status (Numeric)"]
+
+# Case 8. Device Used Most Often
+x8 = df[["Device Used Most Often (Numeric)"]]
+y8 = df["Churn Status (Numeric)"]
+
+# Case 9. Promotional Offers Used
+x9 = df[["Promotional Offers Used"]]
+y9 = df["Churn Status (Numeric)"]
+```
+
+
+
+
+
+
+## Section 4 -
