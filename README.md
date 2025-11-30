@@ -158,7 +158,7 @@ for j in range(i + 1, len(axes)):
 plt.tight_layout()
 plt.show()
 ```
-![alt text](notebooks/histograms/hist_Customer Satisfaction Score (1-10).png)
+![alt text](<notebooks/histograms/hist_Customer Satisfaction Score (1-10).png>)
 ![alt text](notebooks/histograms/hist_Subscription_Plan.png)
 ![alt text](notebooks/histograms/hist_Payment_History__On-Time_Delayed_.png)
 ![alt text](notebooks/histograms/hist_Support_Queries_Logged.png)
