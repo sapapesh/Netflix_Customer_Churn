@@ -1,5 +1,17 @@
 # Analysis of Netflix Customer Churn
 
+## Introduction
+Streaming platforms have increasingly grown year over year in the number of new subscribers; however, they have also seen an increase in cancellations each year resulting in a declining amount of new additions and a lowering retention rate. There are several factors that can influence customer churn, including user experience, pricing and subscription models, changes in viewing habits, and lack of personalization.
+
+This project will review Netflix customer data in an attempt to determine which factors are influencing customer churn.
+
+## Dataset
+The analysis uses the dataset found on Kaggle: Netflix Customer Churn and Engagement Dataset: www.kaggle.com/datasets/dddtra/netflix-customer-churn-and-engagement-dataset
+
+The data has been saved at the following location: https://github.com/sapapesh/Netflix_Customer_Churn/blob/main/data/netflix_large_user_data.csv
+
+
+
 ---
 
 ## WORKFLOW 1. Set Up Your Machine
