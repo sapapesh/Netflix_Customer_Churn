@@ -64,6 +64,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, silhouette_score
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
 from sklearn.linear_model import LogisticRegression
+from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
@@ -72,6 +73,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import os
 ```
 
 ## Section 1. Import and Inspect Data
@@ -483,4 +485,465 @@ evaluate_model("Model 9", model9, x9_test, y9_test)
 
 The results of the linear regression are included in the table above. Upon reviewing these results, no specific use case is performing any better than the other use cases. The R-Squared Scores are all close to 0 indicating that the model does not match the data very well.  The MAE and RMSE all have similar scores and indicated that none of the cases predict customer churn better than the others.
 
+## Section 5 - Train a Model (Logistic Regression)
+
+### 5.1 - Split the data into training and test sets using train_test_split
+```
+# Splitting the data into training and test data sets
+
+df["Churn Status (Numeric)"]
+features1 = ["Customer Satisfaction Score (1-10)"]
+features2 = ["Subscription Plan (Numeric)"]
+features3 = ["Subscription Plan (Numeric)", "Payment History (Numeric)"]
+features4 = ["Support Queries Logged"]
+features5 = ["Age", "Monthly Income ($)"]
+features6 = ["Health_Score"]
+features7 = ["Genre Preference (Numeric)"]
+features8 = ["Device Used Most Often (Numeric)"]
+features9 = ["Promotional Offers Used"]
+
+x1 = df[features1]
+x2 = df[features2]
+x3 = df[features3]
+x4 = df[features4]
+x5 = df[features5]
+x6 = df[features6]
+x7 = df[features7]
+x8 = df[features8]
+x9 = df[features9]
+
+y = df["Churn Status (Numeric)"]
+
+x1_train, x1_test, y1_train, y1_test = train_test_split(x1, y, test_size=0.2, random_state=42)
+x2_train, x2_test, y2_train, y2_test = train_test_split(x2, y, test_size=0.2, random_state=42)
+x3_train, x3_test, y3_train, y3_test = train_test_split(x3, y, test_size=0.2, random_state=42)
+x4_train, x4_test, y4_train, y4_test = train_test_split(x4, y, test_size=0.2, random_state=42)
+x5_train, x5_test, y5_train, y5_test = train_test_split(x5, y, test_size=0.2, random_state=42)
+x6_train, x6_test, y6_train, y6_test = train_test_split(x6, y, test_size=0.2, random_state=42)
+x7_train, x7_test, y7_train, y7_test = train_test_split(x7, y, test_size=0.2, random_state=42)
+x8_train, x8_test, y8_train, y8_test = train_test_split(x8, y, test_size=0.2, random_state=42)
+x9_train, x9_test, y9_train, y9_test = train_test_split(x9, y, test_size=0.2, random_state=42)
+```
+
+### 5.2 - Setting up the training and testing models
+```
+# Training the model
+
+df["Churn Status (Numeric)"]
+features1 = ["Customer Satisfaction Score (1-10)"]
+features2 = ["Subscription Plan (Numeric)"]
+features3 = ["Subscription Plan (Numeric)", "Payment History (Numeric)"]
+features4 = ["Support Queries Logged"]
+features5 = ["Age", "Monthly Income ($)"]
+features6 = ["Health_Score"]
+features7 = ["Genre Preference (Numeric)"]
+features8 = ["Device Used Most Often (Numeric)"]
+features9 = ["Promotional Offers Used"]
+
+x1 = df[features1]
+x2 = df[features2]
+x3 = df[features3]
+x4 = df[features4]
+x5 = df[features5]
+x6 = df[features6]
+x7 = df[features7]
+x8 = df[features8]
+x9 = df[features9]
+
+y = df["Churn Status (Numeric)"]
+
+x1_train, x1_test, y1_train, y1_test = train_test_split(x1, y, test_size=0.2, random_state=42)
+x2_train, x2_test, y2_train, y2_test = train_test_split(x2, y, test_size=0.2, random_state=42)
+x3_train, x3_test, y3_train, y3_test = train_test_split(x3, y, test_size=0.2, random_state=42)
+x4_train, x4_test, y4_train, y4_test = train_test_split(x4, y, test_size=0.2, random_state=42)
+x5_train, x5_test, y5_train, y5_test = train_test_split(x5, y, test_size=0.2, random_state=42)
+x6_train, x6_test, y6_train, y6_test = train_test_split(x6, y, test_size=0.2, random_state=42)
+x7_train, x7_test, y7_train, y7_test = train_test_split(x7, y, test_size=0.2, random_state=42)
+x8_train, x8_test, y8_train, y8_test = train_test_split(x8, y, test_size=0.2, random_state=42)
+x9_train, x9_test, y9_train, y9_test = train_test_split(x9, y, test_size=0.2, random_state=42)
+
+model1 = LogisticRegression(max_iter=1000)
+model2 = LogisticRegression(max_iter=1000)
+model3 = LogisticRegression(max_iter=1000)
+model4 = LogisticRegression(max_iter=1000)
+model5 = LogisticRegression(max_iter=1000)
+model6 = LogisticRegression(max_iter=1000)
+model7 = LogisticRegression(max_iter=1000)
+model8 = LogisticRegression(max_iter=1000)
+model9 = LogisticRegression(max_iter=1000)
+
+model1.fit(x1_train, y1_train)
+model2.fit(x2_train, y2_train)
+model3.fit(x3_train, y3_train)
+model4.fit(x4_train, y4_train)
+model5.fit(x5_train, y5_train)
+model6.fit(x6_train, y6_train)
+model7.fit(x7_train, y7_train)
+model8.fit(x8_train, y8_train)
+model9.fit(x9_train, y9_train)
+```
+
+### 5.3 - Classification: Accuracy, Precision, Recall, F1-score, Confusion Matrix
+```
+# Classification
+def evaluate_train_test_with_cm(models, x_trains, x_tests, y_trains, y_tests):
+    """Evaluate multiple models on their train and test datasets."""
+    results = []
+
+    for i, (model, x_train, x_test, y_train, y_test) in enumerate(zip(models, x_trains, x_tests, y_trains, y_tests, strict=False), 1):
+        # Predictions
+        y_train_pred = model.predict(x_train)
+        y_test_pred = model.predict(x_test)
+
+        # Train metrics
+        train_scores = {
+            "Model": f"Model {i} (Train)",
+            "Accuracy": accuracy_score(y_train, y_train_pred),
+            "Precision": precision_score(y_train, y_train_pred, average="weighted", zero_division=0),
+            "Recall": recall_score(y_train, y_train_pred, average="weighted", zero_division=0),
+            "F1": f1_score(y_train, y_train_pred, average="weighted", zero_division=0),
+            "Confusion Matrix": confusion_matrix(y_train, y_train_pred)
+        }
+
+        # Test metrics
+        test_scores = {
+            "Model": f"Model {i} (Test)",
+            "Accuracy": accuracy_score(y_test, y_test_pred),
+            "Precision": precision_score(y_test, y_test_pred, average="weighted", zero_division=0),
+            "Recall": recall_score(y_test, y_test_pred, average="weighted", zero_division=0),
+            "F1": f1_score(y_test, y_test_pred, average="weighted", zero_division=0),
+            "Confusion Matrix": confusion_matrix(y_test, y_test_pred)
+        }
+
+        results.extend([train_scores, test_scores])
+
+    return results
+
+models = [model1, model2, model3, model4, model5, model6, model7, model8]
+
+# Grouped inputs
+x_trains = [x1_train, x2_train, x3_train, x4_train, x5_train, x6_train, x7_train, x8_train]
+x_tests = [x1_test, x2_test, x3_test, x4_test, x5_test, x6_test, x7_test, x8_test]
+y_trains = [y1_train, y2_train, y3_train, y4_train, y5_train, y6_train, y7_train, y8_train]
+y_tests = [y1_test, y2_test, y3_test, y4_test, y5_test, y6_test, y7_test, y8_test]
+
+# Run evaluation
+results = evaluate_train_test_with_cm(models, x_trains, x_tests, y_trains, y_tests)
+
+# Extract just the main metrics for table view
+summary_results = [
+    {k: v for k, v in res.items() if k != "Confusion Matrix"}
+    for res in results
+]
+
+results_df = pd.DataFrame(summary_results)
+def print_results_with_confusion_matrix(results):
+    """Print a confusion matrix."""
+    for res in results:
+        print(f"\n{res['Model']}")
+        print(f"Accuracy: {res['Accuracy']:.4f}")
+        print(f"Precision: {res['Precision']:.4f}")
+        print(f"Recall: {res['Recall']:.4f}")
+        print(f"F1 Score: {res['F1']:.4f}")
+        print("Confusion Matrix:")
+        print(res["Confusion Matrix"])
+        print("-" * 40)
+print_results_with_confusion_matrix(results)
+```
+![alt text](LogisticRegressionTrainCases.jpg)
+![alt text](LogisticRegressionTestCases.jpg)
+
+Upon a comparison of the training data and the test data, the results are fairly close indicating there does not appear to be overfitting. The accuracy results between 51.5\% and 56\% indicate that the results are only slightly better than accurate half of the time.  Based on the F1 score, Demographics, Genre Preference, and Device Used Most Often offer the best indicator of Churn Status, but their scores are not strong predictors only being between 47.40\% and 49.98\%.
+
+## Section 6 - Train a Model (Logistic Regression)
+
+### 6.1 - Split the data into training and test sets using train_test_split
+```
+# Splitting the test data
+df["Churn Status (Numeric)"]
+features1 = ["Customer Satisfaction Score (1-10)"]
+features2 = ["Subscription Plan (Numeric)"]
+features3 = ["Subscription Plan (Numeric)", "Payment History (Numeric)"]
+features4 = ["Support Queries Logged"]
+features5 = ["Age", "Monthly Income ($)"]
+features6 = ["Health_Score"]
+features7 = ["Genre Preference (Numeric)"]
+features8 = ["Device Used Most Often (Numeric)"]
+features9 = ["Promotional Offers Used"]
+
+x1 = df[features1]
+x2 = df[features2]
+x3 = df[features3]
+x4 = df[features4]
+x5 = df[features5]
+x6 = df[features6]
+x7 = df[features7]
+x8 = df[features8]
+x9 = df[features9]
+
+y = df["Churn Status (Numeric)"]
+
+x1_train, x1_test, y1_train, y1_test = train_test_split(x1, y, test_size=0.2, random_state=42)
+x2_train, x2_test, y2_train, y2_test = train_test_split(x2, y, test_size=0.2, random_state=42)
+x3_train, x3_test, y3_train, y3_test = train_test_split(x3, y, test_size=0.2, random_state=42)
+x4_train, x4_test, y4_train, y4_test = train_test_split(x4, y, test_size=0.2, random_state=42)
+x5_train, x5_test, y5_train, y5_test = train_test_split(x5, y, test_size=0.2, random_state=42)
+x6_train, x6_test, y6_train, y6_test = train_test_split(x6, y, test_size=0.2, random_state=42)
+x7_train, x7_test, y7_train, y7_test = train_test_split(x7, y, test_size=0.2, random_state=42)
+x8_train, x8_test, y8_train, y8_test = train_test_split(x8, y, test_size=0.2, random_state=42)
+x9_train, x9_test, y9_train, y9_test = train_test_split(x9, y, test_size=0.2, random_state=42)
+```
+
+### 6.2 - Setting up the training and testing models
+```
+# Setting up the models
+
+model1 = LogisticRegression(max_iter=1000)
+model2 = LogisticRegression(max_iter=1000)
+model3 = LogisticRegression(max_iter=1000)
+model4 = LogisticRegression(max_iter=1000)
+model5 = LogisticRegression(max_iter=1000)
+model6 = LogisticRegression(max_iter=1000)
+model7 = LogisticRegression(max_iter=1000)
+model8 = LogisticRegression(max_iter=1000)
+model9 = LogisticRegression(max_iter=1000)
+
+model1.fit(x1_train, y1_train)
+model2.fit(x2_train, y2_train)
+model3.fit(x3_train, y3_train)
+model4.fit(x4_train, y4_train)
+model5.fit(x5_train, y5_train)
+model6.fit(x6_train, y6_train)
+model7.fit(x7_train, y7_train)
+model8.fit(x8_train, y8_train)
+model9.fit(x9_train, y9_train)
+
+def evaluate_train_test_with_cm(models, x_trains, x_tests, y_trains, y_tests):
+    """Evaluate multiple models on their train and test datasets."""
+    results = []
+
+    for i, (model, x_train, x_test, y_train, y_test) in enumerate(zip(models, x_trains, x_tests, y_trains, y_tests, strict=False), 1):
+        # Predictions
+        y_train_pred = model.predict(x_train)
+        y_test_pred = model.predict(x_test)
+
+        # Train metrics
+        train_scores = {
+            "Model": f"Model {i} (Train)",
+            "Accuracy": accuracy_score(y_train, y_train_pred),
+            "Precision": precision_score(y_train, y_train_pred, average="weighted", zero_division=0),
+            "Recall": recall_score(y_train, y_train_pred, average="weighted", zero_division=0),
+            "F1": f1_score(y_train, y_train_pred, average="weighted", zero_division=0),
+            "Confusion Matrix": confusion_matrix(y_train, y_train_pred)
+        }
+
+        # Test metrics
+        test_scores = {
+            "Model": f"Model {i} (Test)",
+            "Accuracy": accuracy_score(y_test, y_test_pred),
+            "Precision": precision_score(y_test, y_test_pred, average="weighted", zero_division=0),
+            "Recall": recall_score(y_test, y_test_pred, average="weighted", zero_division=0),
+            "F1": f1_score(y_test, y_test_pred, average="weighted", zero_division=0),
+            "Confusion Matrix": confusion_matrix(y_test, y_test_pred)
+        }
+
+        results.extend([train_scores, test_scores])
+
+    return results
+
+models = [model1, model2, model3, model4, model5, model6, model7, model8, model9]
+
+# Grouped inputs
+x_trains = [x1_train, x2_train, x3_train, x4_train, x5_train, x6_train, x7_train, x8_train, x9_train]
+x_tests = [x1_test, x2_test, x3_test, x4_test, x5_test, x6_test, x7_test, x8_test, x9_test]
+y_trains = [y1_train, y2_train, y3_train, y4_train, y5_train, y6_train, y7_train, y8_train, y9_train]
+y_tests = [y1_test, y2_test, y3_test, y4_test, y5_test, y6_test, y7_test, y8_test, y9_test]
+
+# Run evaluation
+results = evaluate_train_test_with_cm(models, x_trains, x_tests, y_trains, y_tests)
+
+# Extract just the main metrics for table view
+summary_results = [
+    {k: v for k, v in res.items() if k != "Confusion Matrix"}
+    for res in results
+]
+
+results_df = pd.DataFrame(summary_results)
+def print_results_with_confusion_matrix(results):
+    """Print a confusion matrix."""
+    for res in results:
+        print(f"\n{res['Model']}")
+        print(f"Accuracy: {res['Accuracy']:.4f}")
+        print(f"Precision: {res['Precision']:.4f}")
+        print(f"Recall: {res['Recall']:.4f}")
+        print(f"F1 Score: {res['F1']:.4f}")
+        print("Confusion Matrix:")
+        print(res["Confusion Matrix"])
+        print("-" * 40)
+print_results_with_confusion_matrix(results)
+```
+
+### 6.3 - Clustering: Inertia, Silhoutte Score
+```
+# List of feature sets
+x_list = [x1, x2, x3, x4, x5, x6, x7, x8, x9]
+case_names = ["Customer Satisfaction Score", "Subscription Plan", "Subscription Plan and Payment History", "Support Queries Logged", "Demographics", "Health Score", "Genre Preference", "Device Used Most Often", "Promotional Offers Used"]
+
+# Store results
+clustering_results = []
+
+# Loop over all cases
+for i, x in enumerate(x_list):
+    x_clean = x.dropna()  # drop NaNs if present
+    kmeans = KMeans(n_clusters=3, random_state=42)
+    kmeans.fit(x_clean)
+
+    inertia = kmeans.inertia_
+    silhouette = silhouette_score(x_clean, kmeans.labels_)
+
+    clustering_results.append({
+        "Case": case_names[i],
+        "Inertia": inertia,
+        "Silhouette Score": silhouette
+    })
+
+# Display results
+for res in clustering_results:
+    print(f"\nCase: {res['Case']}")
+    print(f"Inertia: {res['Inertia']:.2f}")
+    print(f"Silhouette Score: {res['Silhouette Score']:.4f}")
+    print("-" * 40)
+```
+### Section 6.4 - Visualization of the Clustering Results
+![alt text](notebooks/clustering/x1_Customer_Satisfaction.png)
+![alt text](notebooks/clustering/x2_Subscription_Plan.png)
+![alt text](notebooks/clustering/x3_Plan_Payment.png)
+![alt text](notebooks/clustering/x4_Support_Queries.png)
+![alt text](notebooks/clustering/x5_Age_Income.png)
+![alt text](notebooks/clustering/x6_Health_Score.png)
+![alt text](notebooks/clustering/x7_Genre_Preference.png)
+![alt text](notebooks/clustering/x8_Device_Used.png)
+![alt text](notebooks/clustering/x9_Promo_Offers.png)
+
+Given that the other testing methods are showing a poor ability to predict customer churn, one consideration may be to use the clusters in order to try predicting customer churn.
+
+## Section 7 - Random Forest
+
+### Section 7.1 - Splitting the training and testing data
+```
+df["Churn Status (Numeric)"]
+features1 = ["Customer Satisfaction Score (1-10)"]
+features2 = ["Subscription Plan (Numeric)"]
+features3 = ["Subscription Plan (Numeric)", "Payment History (Numeric)"]
+features4 = ["Support Queries Logged"]
+features5 = ["Age", "Monthly Income ($)"]
+features6 = ["Health_Score"]
+features7 = ["Genre Preference (Numeric)"]
+features8 = ["Device Used Most Often (Numeric)"]
+features9 = ["Promotional Offers Used"]
+
+x1 = df[features1]
+x2 = df[features2]
+x3 = df[features3]
+x4 = df[features4]
+x5 = df[features5]
+x6 = df[features6]
+x7 = df[features7]
+x8 = df[features8]
+x9 = df[features9]
+
+y = df["Churn Status (Numeric)"]
+
+results = {}
+
+#train/test split
+x1_train, x1_test, y1_train, y1_test = train_test_split(x1, y, test_size=0.2, random_state=42)
+x2_train, x2_test, y2_train, y2_test = train_test_split(x2, y, test_size=0.2, random_state=42)
+x3_train, x3_test, y3_train, y3_test = train_test_split(x3, y, test_size=0.2, random_state=42)
+x4_train, x4_test, y4_train, y4_test = train_test_split(x4, y, test_size=0.2, random_state=42)
+x5_train, x5_test, y5_train, y5_test = train_test_split(x5, y, test_size=0.2, random_state=42)
+x6_train, x6_test, y6_train, y6_test = train_test_split(x6, y, test_size=0.2, random_state=42)
+x7_train, x7_test, y7_train, y7_test = train_test_split(x7, y, test_size=0.2, random_state=42)
+x8_train, x8_test, y8_train, y8_test = train_test_split(x8, y, test_size=0.2, random_state=42)
+x9_train, x9_test, y9_train, y9_test = train_test_split(x9, y, test_size=0.2, random_state=42)
+```
+
+### 7.2 -  Setting up the training and testing models
+```
+model1 = RandomForestClassifier(n_estimators=200, max_depth=None, random_state=42)
+model2 = RandomForestClassifier(n_estimators=200, max_depth=None, random_state=42)
+model3 = RandomForestClassifier(n_estimators=200, max_depth=None, random_state=42)
+model4 = RandomForestClassifier(n_estimators=200, max_depth=None, random_state=42)
+model5 = RandomForestClassifier(n_estimators=200, max_depth=None, random_state=42)
+model6 = RandomForestClassifier(n_estimators=200, max_depth=None, random_state=42)
+model7 = RandomForestClassifier(n_estimators=200, max_depth=None, random_state=42)
+model8 = RandomForestClassifier(n_estimators=200, max_depth=None, random_state=42)
+model9 = RandomForestClassifier(n_estimators=200, max_depth=None, random_state=42)
+
+model1.fit(x1_train, y1_train)
+model2.fit(x2_train, y2_train)
+model3.fit(x3_train, y3_train)
+model4.fit(x4_train, y4_train)
+model5.fit(x5_train, y5_train)
+model6.fit(x6_train, y6_train)
+model7.fit(x7_train, y7_train)
+model8.fit(x8_train, y8_train)
+model9.fit(x9_train, y9_train)
+```
+
+### 7.3 - Random Forest: Accuracy, Precision, Recall, F1 Score
+```
+def evaluate_train_test_with_rf(models, x_trains, x_tests, y_trains, y_tests):
+    """Evaluate multiple models using Random Forest on train and test datasets."""
+    results = []
+
+    for i, (model, x_train, x_test, y_train, y_test) in enumerate(zip(models, x_trains, x_tests, y_trains, y_tests, strict=False), 1):
+        # Predictions
+        y_train_pred = model.predict(x_train)
+        y_test_pred = model.predict(x_test)
+
+        # Train metrics
+        train_scores = {
+            "Model": f"Model {i} (Train)",
+            "Accuracy": accuracy_score(y_train, y_train_pred),
+            "Precision": precision_score(y_train, y_train_pred, average="weighted", zero_division=0),
+            "Recall": recall_score(y_train, y_train_pred, average="weighted", zero_division=0),
+            "F1": f1_score(y_train, y_train_pred, average="weighted", zero_division=0)
+        }
+
+        # Test metrics
+        test_scores = {
+            "Model": f"Model {i} (Test)",
+            "Accuracy": accuracy_score(y_test, y_test_pred),
+            "Precision": precision_score(y_test, y_test_pred, average="weighted", zero_division=0),
+            "Recall": recall_score(y_test, y_test_pred, average="weighted", zero_division=0),
+            "F1": f1_score(y_test, y_test_pred, average="weighted", zero_division=0)
+        }
+
+        results.extend([train_scores, test_scores])
+
+    return results
+
+models = [model1, model2, model3, model4, model5, model6, model7, model8, model9]
+
+# Grouped inputs
+x_trains = [x1_train, x2_train, x3_train, x4_train, x5_train, x6_train, x7_train, x8_train, x9_train]
+x_tests = [x1_test, x2_test, x3_test, x4_test, x5_test, x6_test, x7_test, x8_test, x9_test]
+y_trains = [y1_train, y2_train, y3_train, y4_train, y5_train, y6_train, y7_train, y8_train, y9_train]
+y_tests = [y1_test, y2_test, y3_test, y4_test, y5_test, y6_test, y7_test, y8_test, y9_test]
+
+# Run evaluation
+results = evaluate_train_test_with_rf(models, x_trains, x_tests, y_trains, y_tests)
+
+results_df = pd.DataFrame(summary_results)
+def print_results(results):
+    """Print a confusion matrix."""
+    for res in results:
+        print(f"\n{res['Model']}")
+        print(f"Accuracy: {res['Accuracy']:.4f}")
+        print(f"Precision: {res['Precision']:.4f}")
+        print(f"Recall: {res['Recall']:.4f}")
+        print(f"F1 Score: {res['F1']:.4f}")
+print_results(results)
+```
 
