@@ -946,4 +946,14 @@ def print_results(results):
         print(f"F1 Score: {res['F1']:.4f}")
 print_results(results)
 ```
+![alt text](RandomForestTrainCases.jpg)
+![alt text](RandomForestTestCases.jpg)
 
+## Section 8 - Conclusion
+The following methods of machine learning have been used to analyze the data: linear regression, logistic regression, clustering, and random forest. Nine use cases have been processed to determine if any of the use cases are able to predict customer churn. However, for every use case, the results have only been slightly better than a 50% accuracy in being about to predict customer churn.  None of the methods have performed signficantly better than the other methods.
+
+For future work, two options are available to try improve on the customer churn predictions. The first option is to combine multiple attributes. The downside to this approach is that there is not a clear indication of which attributes to combine to give the best results. However, two of our use cases combine attributes (Demographics and Health Score) and the use cases did not perform any better than the other use cases.
+
+The other option for future work is to use the clusters identified for the attributes and to determine if the clusters are a better indication of customer churn. This analysis did not include any clusters as part of the use cases.
+
+In conclusion, the analysis has determined that the attributes themselves are not a strong indicator of customer churn. In addition, there is not a strong correlation between the attributes and further analysis is needed to determine how to breakdown and/or combine the attributes better predict customer churn.
