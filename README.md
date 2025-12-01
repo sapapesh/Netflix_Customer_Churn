@@ -454,7 +454,7 @@ model9.fit(x9_train, y9_train)
 
 ### Section 4.3 - Evaluate Performance
 
-```
+```python
 def evaluate_model(name, model, x_test, y_test):
     """Evaluate a trained model on test data and return metrics."""
     y_pred = model.predict(x_test)
