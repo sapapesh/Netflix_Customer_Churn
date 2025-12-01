@@ -478,6 +478,7 @@ evaluate_model("Model 7", model7, x7_test, y7_test)
 evaluate_model("Model 8", model8, x8_test, y8_test)
 evaluate_model("Model 9", model9, x9_test, y9_test)
 ```
+
 ![alt text](LinearRegression.jpg)
 
 The results of the linear regression are included in the table above. Upon reviewing these results, no specific use case is performing any better than the other use cases. The R-Squared Scores are all close to 0 indicating that the model does not match the data very well.  The MAE and RMSE all have similar scores and indicated that none of the cases predict customer churn better than the others.
