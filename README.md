@@ -481,7 +481,7 @@ evaluate_model("Model 8", model8, x8_test, y8_test)
 evaluate_model("Model 9", model9, x9_test, y9_test)
 ```
 
-![alt text](LinearRegression.jpg)
+![alt text](docs/images/LinearRegression.jpg)
 
 The results of the linear regression are included in the table above. Upon reviewing these results, no specific use case is performing any better than the other use cases. The R-Squared Scores are all close to 0 indicating that the model does not match the data very well.  The MAE and RMSE all have similar scores and indicated that none of the cases predict customer churn better than the others.
 
@@ -650,8 +650,8 @@ def print_results_with_confusion_matrix(results):
         print("-" * 40)
 print_results_with_confusion_matrix(results)
 ```
-![alt text](LogisticRegressionTrainCases.jpg)
-![alt text](LogisticRegressionTestCases.jpg)
+![alt text](docs/images/LogisticRegressionTrainCases.jpg)
+![alt text](docs/images/LogisticRegressionTestCases.jpg)
 
 Upon a comparison of the training data and the test data, the results are fairly close indicating there does not appear to be overfitting. The accuracy results between 51.5\% and 56\% indicate that the results are only slightly better than accurate half of the time.  Based on the F1 score, Demographics, Genre Preference, and Device Used Most Often offer the best indicator of Churn Status, but their scores are not strong predictors only being between 47.40\% and 49.98\%.
 
@@ -946,8 +946,8 @@ def print_results(results):
         print(f"F1 Score: {res['F1']:.4f}")
 print_results(results)
 ```
-![alt text](RandomForestTrainCases.jpg)
-![alt text](RandomForestTestCases.jpg)
+![alt text](docs/images/RandomForestTrainCases.jpg)
+![alt text](docs/images/RandomForestTestCases.jpg)
 
 ## Section 8 - Conclusion
 The following methods of machine learning have been used to analyze the data: linear regression, logistic regression, clustering, and random forest. Nine use cases have been processed to determine if any of the use cases are able to predict customer churn. However, for every use case, the results have only been slightly better than a 50% accuracy in being about to predict customer churn.  None of the methods have performed signficantly better than the other methods.
